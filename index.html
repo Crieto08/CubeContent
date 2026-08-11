@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KANVAS Preview</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 
     <script type="importmap">
@@ -19,33 +23,48 @@
 
 <body>
 
+<canvas id="bg"></canvas>
+
 <div id="loading">
-    Loading...
+    <div class="loading-mark"></div>
+    <span>Preparing preview</span>
+</div>
+
+<!-- Státusz jelző -->
+<div id="statusTag">
+    <span class="dot"></span>
+    KANVAS&nbsp;PREVIEW
 </div>
 
 <!-- Help gomb -->
-<button id="infoBtn">Help</button>
+<button id="infoBtn" aria-expanded="false">
+    <span class="key">i</span>
+    Help
+</button>
 
 <!-- Leírás -->
 <div id="controls" class="hidden">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+
+    <span class="eyebrow">Preview controls</span>
     <h2>KANVAS Preview</h2>
 
-    <strong>Navigation</strong><br>
-    Left Mouse Button – Rotate<br>
-    Right Mouse Button – Pan<br>
-    Mouse Wheel – Zoom
+    <div class="control-group">
+        <span class="group-label">Navigation</span>
+        <div class="control-row"><span class="key">LMB</span><span>Rotate</span></div>
+        <div class="control-row"><span class="key">RMB</span><span>Pan</span></div>
+        <div class="control-row"><span class="key">Scroll</span><span>Zoom</span></div>
+    </div>
 
-    <br><br>
-
- <strong>Options</strong><br>
-Reset View – Restore the default camera position.
+    <div class="control-group">
+        <span class="group-label">Options</span>
+        <p class="hint">Reset View restores the default camera position.</p>
+    </div>
 </div>
 
 <div id="buttons">
     <button id="resetBtn">Reset View</button>
 </div>
-
-<canvas id="bg"></canvas>
 
 <img id="logo" src="logo.png" alt="KANVAS Logo">
 
