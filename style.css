@@ -376,6 +376,66 @@ button:focus-visible{
 }
 
 /* ------------------ */
+/* TAP TO START (mobil autoplay fallback) */
+/* ------------------ */
+
+#tapPrompt{
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%);
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:12px 22px;
+    border-radius:999px;
+
+    border:1px solid var(--line-strong);
+    background:rgba(8,9,11,.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+
+    color:var(--bronze-bright);
+    font-family:var(--font-body);
+    font-size:13px;
+
+    cursor:pointer;
+    z-index:1200;
+    -webkit-tap-highlight-color:transparent;
+}
+
+#tapPrompt.hidden{
+    display:none;
+}
+
+#tapPrompt .pulse{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--bronze);
+    box-shadow:0 0 0 0 rgba(201,168,111,.6);
+    animation:pulse 1.6s ease-out infinite;
+}
+
+@keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(201,168,111,.55); }
+    70%{ box-shadow:0 0 0 10px rgba(201,168,111,0); }
+    100%{ box-shadow:0 0 0 0 rgba(201,168,111,0); }
+}
+
+@media (max-width:700px){
+    #tapPrompt{
+        bottom:80px;
+        font-size:12.5px;
+        padding:11px 18px;
+    }
+}
+
+
+
+/* ------------------ */
 /* MOBIL */
 /* ------------------ */
 

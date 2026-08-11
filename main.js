@@ -126,6 +126,34 @@ document.addEventListener("visibilitychange", () => {
 
 });
 
+// Néhány mobil böngésző (pl. bizonyos beágyazott/in-app böngészők) még
+// muted + playsinline mellett is blokkolja az automatikus indítást.
+// Ha ez történik, mutatunk egy gombot, amire koppintva – közvetlen
+// felhasználói érintésből – biztosan elindul a videó.
+const tapPrompt = document.getElementById("tapPrompt");
+
+function showTapPromptIfStillPaused() {
+
+    if (video.paused) {
+        tapPrompt.classList.remove("hidden");
+    }
+
+}
+
+video.addEventListener("playing", () => {
+    tapPrompt.classList.add("hidden");
+});
+
+tapPrompt.addEventListener("click", async () => {
+
+    try {
+        await video.play();
+    } catch (e) {
+        // marad kint a felirat, próbálkozhat újra
+    }
+
+});
+
 // ======= GLB =======
 
 const loadingLabel = document.querySelector("#loading span");
@@ -172,6 +200,8 @@ new GLTFLoader().load("KANVAS_BLAND_HTML.glb", gltf => {
     loading.classList.add("hidden");
 
     playVideo();
+
+    setTimeout(showTapPromptIfStillPaused, 800);
 
 }, undefined, error => {
 
