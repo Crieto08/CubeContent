@@ -65,6 +65,12 @@ video.setAttribute("muted", "");
 video.setAttribute("autoplay", "");
 video.setAttribute("loop", "");
 
+// Sok mobil böngésző (főleg iOS Safari) nem játssza le a videót, ha az
+// elem nincs ténylegesen a dokumentum DOM-jában – vizuálisan elrejtjük,
+// de nem display:none-nal, mert azt egyes böngészők leállásnak veszik.
+video.classList.add("hidden-video");
+document.body.appendChild(video);
+
 video.load();
 
 const texture = new THREE.VideoTexture(video);

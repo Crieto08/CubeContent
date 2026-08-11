@@ -39,6 +39,20 @@ body{
     touch-action:none;
 }
 
+/* A videó elemnek ténylegesen a DOM-ban kell lennie (nem display:none),
+   különben egyes mobil böngészők nem indítják el a lejátszást – ezért
+   csak vizuálisan tesszük láthatatlanná és kattinthatatlanná. */
+.hidden-video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:2px;
+    height:2px;
+    opacity:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
 /* ------------------ */
 /* LOADING */
 /* ------------------ */
