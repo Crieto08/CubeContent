@@ -155,6 +155,12 @@ video.addEventListener("playing", () => {
     tapPrompt.classList.add("hidden");
 });
 
+video.addEventListener("pause", () => {
+    // Ha a videó bármikor leáll (pl. az iOS rendszer szünetelteti),
+    // mutassuk meg újra a gombot, hogy egy koppintással újraindítható legyen.
+    showTapPromptIfStillPaused();
+});
+
 tapPrompt.addEventListener("click", async () => {
 
     try {
@@ -241,16 +247,24 @@ infoBtn.onclick = () => {
 
 resetBtn.onclick = () => {
 
-    isInside = false;
-    insideBtn.textContent = "Stand Inside";
-    insideBtn.classList.remove("active");
+    try {
 
-    controls.minDistance = 0;
-    controls.maxDistance = Infinity;
-    controls.enableZoom = true;
-    controls.enablePan = true;
+        isInside = false;
+        insideBtn.textContent = "Stand Inside";
+        insideBtn.classList.remove("active");
 
-    controls.reset();
+        controls.minDistance = 0;
+        controls.maxDistance = Infinity;
+        controls.enableZoom = true;
+        controls.enablePan = true;
+
+        controls.reset();
+
+    } catch (e) {
+
+        console.error("Reset hiba:", e);
+
+    }
 
 };
 
@@ -311,14 +325,34 @@ insideBtn.onclick = () => {
 
 // ======= RESIZE =======
 
-window.addEventListener("resize", () => {
+function handleResize() {
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    camera.aspect = w / h;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(w, h);
 
+}
+
+window.addEventListener("resize", handleResize);
+
+// A mobil Safari címsorának összecsukódása/kinyílása néha nem vált ki
+// megbízható "resize" eseményt, emiatt a canvas és a kamera aspektusa
+// szétcsúszhat egymástól (ez okozza az elcsúszott/oldalra tolt képet).
+// A visualViewport API és egy késleltetett újraellenőrzés ezt kivédi.
+if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", handleResize);
+}
+
+window.addEventListener("orientationchange", () => {
+    setTimeout(handleResize, 300);
 });
+
+setTimeout(handleResize, 300);
+setTimeout(handleResize, 1000);
 
 // ======= LOOP =======
 
@@ -326,21 +360,32 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    if (video.readyState >= video.HAVE_CURRENT_DATA) {
+    try {
 
-        if (video.paused) {
+        if (video.readyState >= video.HAVE_CURRENT_DATA) {
 
-            playVideo();
+            if (video.paused) {
+
+                playVideo();
+
+            }
+
+            texture.needsUpdate = true;
 
         }
 
-        texture.needsUpdate = true;
+        controls.update();
+
+        renderer.render(scene, camera);
+
+    } catch (e) {
+
+        // Egy esetleges hiba (pl. egy adott mobil böngésző furcsasága)
+        // ne fagyassza le véglegesen a képet – a következő frame-nél
+        // újrapróbáljuk, és közben kiírjuk a hibát a konzolra.
+        console.error("Render hiba:", e);
 
     }
-
-    controls.update();
-
-    renderer.render(scene, camera);
 
 }
 
