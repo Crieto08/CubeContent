@@ -118,20 +118,34 @@ new GLTFLoader().load("KANVAS_BLAND_HTML.glb", gltf => {
 
         if (!obj.isMesh) return;
 
-        const materials = Array.isArray(obj.material)
-            ? obj.material
-            : [obj.material];
+        if (!Array.isArray(obj.material) && obj.material.name === "Video") {
 
-        materials.forEach(mat => {
+            // A "Video" anyagot unlit (fénytől független) anyagra cseréljük,
+            // hogy a videó saját fényereje jelenjen meg, ne sötétítsék el
+            // a jelenet fényei (pl. a plafon és a sarkok).
+            obj.material = new THREE.MeshBasicMaterial({
+                map: texture,
+                side: obj.material.side
+            });
 
-            if (mat.name === "Video") {
+        } else if (Array.isArray(obj.material)) {
 
-                mat.map = texture;
-                mat.needsUpdate = true;
+            obj.material = obj.material.map(mat => {
 
-            }
+                if (mat.name === "Video") {
 
-        });
+                    return new THREE.MeshBasicMaterial({
+                        map: texture,
+                        side: mat.side
+                    });
+
+                }
+
+                return mat;
+
+            });
+
+        }
 
     });
 
