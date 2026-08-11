@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KANVAS Preview</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.178.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.178.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+
+<div id="loading">
+    Loading...
+</div>
+
+<!-- Help gomb -->
+<button id="infoBtn">Help</button>
+
+<!-- Leírás -->
+<div id="controls" class="hidden">
+    <h2>KANVAS Preview</h2>
+
+    <strong>Navigation</strong><br>
+    Left Mouse Button – Rotate<br>
+    Right Mouse Button – Pan<br>
+    Mouse Wheel – Zoom
+
+    <br><br>
+
+ <strong>Options</strong><br>
+Reset View – Restore the default camera position.
+</div>
+
+<div id="buttons">
+    <button id="resetBtn">Reset View</button>
+</div>
+
+<canvas id="bg"></canvas>
+
+<img id="logo" src="logo.png" alt="KANVAS Logo">
+
+<script type="module" src="main.js"></script>
+
+</body>
+</html>

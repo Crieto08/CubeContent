@@ -1,0 +1,160 @@
+html,
+body{
+    margin:0;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, Helvetica, sans-serif;
+    background:radial-gradient(circle at top,#6aa8ff,#23456f,#101d31);
+}
+
+#bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    background:#101d31;
+    z-index:9999;
+}
+
+#loading.hidden{
+    display:none;
+}
+
+/* ------------------ */
+/* HELP GOMB */
+/* ------------------ */
+
+#infoBtn{
+    position:fixed;
+    top:20px;
+    left:20px;
+
+    z-index:1000;
+
+    padding:10px 18px;
+
+    border:none;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+
+    color:#fff;
+    cursor:pointer;
+}
+
+#infoBtn:hover{
+    background:rgba(255,255,255,.25);
+}
+
+/* ------------------ */
+/* LEÍRÁS */
+/* ------------------ */
+
+#controls{
+    position:fixed;
+    left:20px;
+    top:70px;
+
+    width:320px;
+    max-width:calc(100vw - 40px);
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(12px);
+
+    color:#fff;
+
+    z-index:1000;
+}
+
+#controls.hidden{
+    display:none;
+}
+
+/* ------------------ */
+/* GOMBOK */
+/* ------------------ */
+
+#buttons{
+    position:fixed;
+    right:20px;
+    top:20px;
+
+    display:flex;
+    gap:10px;
+
+    z-index:1000;
+}
+
+button{
+    padding:10px 16px;
+
+    border:none;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+button:hover{
+    background:rgba(255,255,255,.25);
+}
+
+/* ------------------ */
+/* LOGÓ */
+/* ------------------ */
+
+#logo{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+
+    width:180px;
+    height:auto;
+
+    z-index:1000;
+
+    pointer-events:none;
+    user-select:none;
+
+    opacity:.95;
+}
+
+/* ------------------ */
+/* MOBIL */
+/* ------------------ */
+
+@media (max-width:700px){
+
+    #buttons{
+        top:auto;
+        bottom:20px;
+        right:20px;
+    }
+
+    #controls{
+        width:calc(100vw - 40px);
+    }
+
+    #logo{
+        width:120px;
+    }
+
+}
