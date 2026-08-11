@@ -21,7 +21,18 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // ======= KEZDŐ NÉZET =======
-camera.position.set(4.102, -0.008, -0.186);
+
+// Mobilon (ugyanaz a töréspont, mint a CSS-ben: 700px) egy kicsit
+// távolabbról indul a kamera, hogy a doboz ne töltse ki túlságosan
+// a keskeny képernyőt – a Reset View gomb is mindig ide tér vissza,
+// mert az OrbitControls a betöltéskor elmentett állapotot állítja
+// vissza.
+const isMobile = window.innerWidth <= 700;
+
+const CAMERA_POS_DESKTOP = new THREE.Vector3(4.102, -0.008, -0.186);
+const CAMERA_POS_MOBILE = new THREE.Vector3(5.48, 0.006, -0.172);
+
+camera.position.copy(isMobile ? CAMERA_POS_MOBILE : CAMERA_POS_DESKTOP);
 
 const DEFAULT_TARGET = new THREE.Vector3(-0.116, -0.055, -0.234);
 
